@@ -38,11 +38,13 @@ def app(df, X, y):
         st.pyplot()
 
     if st.checkbox("Show Sample Results"):
-        safe = (df['target'] == 0).sum()
-        prone = (df['target'] == 1).sum()
-        data = [safe,prone]
-        labels = ['Safe', 'Prone']
-        colors = sns.color_palette('pastel')[0:7]
+        safe = (df['target'] == 1).sum()
+        prone1 = (df['target'] == 2).sum()
+        prone2 = (df['target'] == 3).sum()
+        prone3 = (df['target'] == 4).sum()
+        data = [safe,prone1,prone2,prone3]
+        labels = ['Safe','Mild','Medium','Chronic']
+        colors = sns.color_palette('pastel')[0:4]
         plt.pie(data, labels = labels, colors = colors, autopct='%.0f%%')
         st.pyplot()
 
@@ -57,7 +59,7 @@ def app(df, X, y):
         # Export decision tree in dot format and store in 'dot_data' variable.
         dot_data = tree.export_graphviz(
             decision_tree=model, max_depth=3, out_file=None, filled=True, rounded=True,
-            feature_names=X.columns, class_names=['0', '1']
+            feature_names=X.columns, class_names=['1', '2', '3', '4']
         )
         # Plot the decision tree using the 'graphviz_chart' function of the 'streamlit' module.
         st.graphviz_chart(dot_data)
